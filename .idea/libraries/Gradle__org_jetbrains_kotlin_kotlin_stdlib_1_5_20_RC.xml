@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.5.20-RC">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/6.5/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/7fd0e9a9b711fe1766b6665d4cb5ae54c428df39/kotlin-stdlib-1.5.20-RC.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/7fd0e9a9b711fe1766b6665d4cb5ae54c428df39/kotlin-stdlib-1.5.20-RC.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/6.5/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.5.20-RC-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.5.20-RC-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/6.5/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/217dc2d8e4de1d9094cb47573d8572a943f72a0b/kotlin-stdlib-1.5.20-RC-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.5.20-RC/217dc2d8e4de1d9094cb47573d8572a943f72a0b/kotlin-stdlib-1.5.20-RC-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
