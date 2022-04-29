@@ -20,8 +20,7 @@ import android.util.Log
 //allpoints.txt :点ID，线ID，宽度，X,Y
 //lines.txt  端点ID1，端点ID2，宽度
 //points.txt 端点ID，X,Y
-
-
+//polygon_pois.txt 点id 多边形id X,Y
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
     //定义控件
@@ -47,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     private var lines:ArrayList<Line> = ArrayList()
     private var allpoint:ArrayList<String> = ArrayList()//结点
     private var allpoints:ArrayList<AllPoints> = ArrayList()
+    private var polygon:ArrayList<String> = ArrayList();
+    private var polygons:ArrayList<Polygon> = ArrayList();
     private var corner:ArrayList<String> = ArrayList()//转弯处
     private var corners:ArrayList<Corner> = ArrayList()
     private var corners_flag:Boolean = true
@@ -166,6 +167,7 @@ class MainActivity : AppCompatActivity() {
         line =  readfile("lines.txt")
         allpoint = readfile("allpoints.txt")
         corner = readfile("corner.txt")
+        polygon = readfile("polygon_pois.txt")
         for (index in 0..allpoint.size-6 step 6){
             allpoints.add(AllPoints(allpoint[index],allpoint[index+1],allpoint[index+2].toDouble(),
                 allpoint[index+3].replace("\r","").toDouble(),allpoint[index +5].toFloat()))
@@ -184,6 +186,21 @@ class MainActivity : AppCompatActivity() {
                     stations[index].width))
             }
         }
+
+        var polygon1:ArrayList<Point> = ArrayList()
+        var pid = polygon[1]
+        for (index in 0..polygon.size-4 step 4){
+            if(polygon[index+1]==pid){
+                polygon1.add(Point(polygon[index],polygon[index+2].toDouble(),polygon[index+3].toDouble()))
+            }else
+            {
+                polygons.add(Polygon(pid,polygon1))
+                polygon1= ArrayList()
+                polygon1.add(Point(polygon[index],polygon[index+2].toDouble(),polygon[index+3].toDouble()))
+                pid = polygon[index+1];
+            }
+        }
+
 //寻找拐角
         var lid =corner[1]
         var pois1 = ArrayList<Point>();
@@ -227,6 +244,7 @@ class MainActivity : AppCompatActivity() {
         myView.points=points
         myView.lines = lines
         myView.allPointsList = allpoints
+        myView.polygons=polygons
 //        view不可见
         myView.visibility = View.INVISIBLE
         myView.flagAimPoint = true

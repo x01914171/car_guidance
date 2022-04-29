@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -12,6 +13,7 @@ import android.view.View
 import com.example.mypro.AllPoints
 import com.example.mypro.Line
 import com.example.mypro.Point
+import com.example.mypro.Polygon
 import kotlin.math.sqrt
 
 class MyView @JvmOverloads constructor(
@@ -22,6 +24,7 @@ class MyView @JvmOverloads constructor(
     var lines: ArrayList<Line> = ArrayList()
     var pathr:ArrayList<Point> = ArrayList()
     var allPointsList: ArrayList<AllPoints> = ArrayList()
+    var polygons:ArrayList<Polygon> = ArrayList()
     //目标点
     var aimList:Array<Point> = arrayOf(Point("0",0.0,0.0), Point("0",0.0,0.0))
     //设置转换参数
@@ -52,7 +55,32 @@ class MyView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         //初始化地图
-        paint.strokeWidth = 5f
+        paint.setAntiAlias(true)
+
+        //    绘制多边形
+        for (i in polygons){
+            val path = Path()
+            for (j in 0..i.pois.size-1){
+                x0 = i.pois[j].x
+                y0 = i.pois[j].y
+                val p0 = xy2WH(x0, y0)
+                if(j==0){
+                    path.moveTo(p0[0].toFloat(), p0[1].toFloat())
+                }else{
+                    path.lineTo(p0[0].toFloat(), p0[1].toFloat())
+                }
+            }
+            paint.setStyle(Paint.Style.FILL);
+            path.close()
+            paint.color = Color.argb(255,253,254,255)
+            canvas?.drawPath(path, paint);
+
+            paint.setStyle(Paint.Style.STROKE)
+            paint.color = Color.BLACK
+            canvas?.drawPath(path, paint);
+        }
+        paint.reset()
+        paint.strokeWidth = 3f
         paint.color = Color.BLACK
         for (index in 1..allPointsList.size -1) {
             if (allPointsList[index].lineid == allPointsList[index-1].lineid){
@@ -79,6 +107,7 @@ class MyView @JvmOverloads constructor(
                 continue
             }
         }
+
         //显示初始点
         if (flagAimPoint){
             x0 = aimList[0].x
