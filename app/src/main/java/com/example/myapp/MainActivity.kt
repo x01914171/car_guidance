@@ -17,10 +17,10 @@ import GraphImpl
 import android.util.Log
 
 
-//allpoints.txt :点ID，线ID，宽度，X,Y
+//allpoints.txt :点ID，线ID，宽度，X,Y (道路中心线)
 //lines.txt  端点ID1，端点ID2，宽度
 //points.txt 端点ID，X,Y
-//polygon_pois.txt 点id 多边形id X,Y
+//polygon_pois.txt 点id 多边形id X,Y (道路多边形)
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
     //定义控件
@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     private var polygons:ArrayList<Polygon> = ArrayList();
     private var corner:ArrayList<String> = ArrayList()//转弯处
     private var corners:ArrayList<Corner> = ArrayList()
-    private var corners_flag:Boolean = true
     private var carwidth =0.0f
     private var carlength =0.0f
     var graph:GraphImpl<Point,Float> = GraphImpl(false,5.0f) //图
@@ -116,11 +115,11 @@ class MainActivity : AppCompatActivity() {
                         if (!switch.isChecked){
                             //图
                             path = shortestPath(graph,from = firstPoint,destination = lastPoint)
-                            if(path.first.size!=0){
+                            if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
-                                textView.text= "出发点：$firstPoint\n目的点：$lastPoint\n距离约${Math.round(path.second)}米"
-                                Toast.makeText(this,"查询成功",Toast.LENGTH_LONG).show()
+                                textView.text= "出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n"
+                                Toast.makeText(this, "查询成功", Toast.LENGTH_LONG).show()
                             }else{
                                 textView.text= "不连通"
                                 Toast.makeText(this,"不连通",Toast.LENGTH_LONG).show()
@@ -145,11 +144,11 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                             path = shortestPath(graph2,from = firstPoint,destination = lastPoint)
-                            if(path.first.size!=0){
+                            if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
-                                textView.text="出发点：$firstPoint\n目的点：$lastPoint\n距离约${Math.round(path.second)}米"
-                                Toast.makeText(this,"查询成功",Toast.LENGTH_LONG).show()
+                                textView.text="出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n"
+                                Toast.makeText(this, "查询成功", Toast.LENGTH_LONG).show()
                             }else{
                                 textView.text= "不连通"
                                 Toast.makeText(this,"不连通",Toast.LENGTH_LONG).show()
@@ -162,6 +161,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 初始化地图
+     */
     fun initMap(){
         point = readfile("points.txt")
         line =  readfile("lines.txt")
@@ -181,8 +183,8 @@ class MainActivity : AppCompatActivity() {
         for (index in 1..stations.size-1){
             if (stations[index].lID==stations[index-1].lID){
                 lines.add(Line(stations[index].lID,stations[index].length,
-                    points[findpoint(stations[index].pID)],
-                    points[findpoint(stations[index-1].pID)],
+                    points[findpoint(stations[index].pID,points)],
+                    points[findpoint(stations[index-1].pID,points)],
                     stations[index].width))
             }
         }
@@ -220,7 +222,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //图
+        //图的构建
         for(i in points){
             graph.addVertex(i)
         }
@@ -251,7 +253,11 @@ class MainActivity : AppCompatActivity() {
         myView.invalidate()
     }
 
-// 判断是否能通过拐弯
+    /**
+     * 判断是否过拐角
+     * @param corner Corner
+     * @return Boolean
+     */
     fun cornerCollesion(corner: Corner):Boolean{
         var flag:Boolean=true   //可以通行
         for( i in 1..corner.pois1.size-2){
@@ -266,7 +272,12 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-// 读取数据文件
+
+    /***
+     * 读取数据文件
+     * @param filename String
+     * @return ArrayList<String>
+     */
     fun readfile(filename:String): ArrayList<String> {
         var string= ""
         try {
@@ -281,9 +292,9 @@ class MainActivity : AppCompatActivity() {
         return java.util.ArrayList(string.split("\n",",") )
     }
 
-    fun findpoint(id:String):Int{
-        for(i in 0..points.size-1){
-            if (points[i].id == id ) return i
+    fun findpoint(id:String,p:ArrayList<Point>):Int{
+        for(i in 0..p.size-1){
+            if (p[i].id == id ) return i
         }
         return -1
     }
