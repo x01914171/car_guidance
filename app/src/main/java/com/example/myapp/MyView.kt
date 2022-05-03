@@ -22,7 +22,7 @@ class MyView @JvmOverloads constructor(
     var pathr: ArrayList<Point> = ArrayList()
     var allPointsList: ArrayList<AllPoints> = ArrayList()
     var polygons: ArrayList<Polygon> = ArrayList()
-
+    var text:ArrayList<String> = ArrayList()
     //目标点
     var aimList: Array<Point> = arrayOf(Point("0", 0.0, 0.0), Point("0", 0.0, 0.0))
 
@@ -82,6 +82,24 @@ class MyView @JvmOverloads constructor(
             canvas?.drawPath(path, paint)
         }
         paint.reset()
+        //绘制文本
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(20f);
+        paint.setTextSize(20f);
+        var name = text[0]
+        var poys = ArrayList<Polygon>()
+        for(index in 0..text.size-1){
+            if(isNumeric(text[index])){
+                poys.add(findPolygon(polygons,text[index].replace("\r","")))
+            }else{
+                if(index==0) continue
+                var location = xy2WH(getExtent(poys).first,getExtent(poys).second)
+                canvas?.drawText(name, location[0].toFloat(), location[1].toFloat(),paint)
+                name = text[index]
+                poys = ArrayList<Polygon>()
+            }
+        }
+
         paint.strokeWidth = 3f
         paint.color = Color.BLACK
         for (index in 1..allPointsList.size - 1) {
@@ -297,4 +315,33 @@ class MyView @JvmOverloads constructor(
         val Y = -((y - 50f) / (this.width - 100) * (maxy - miny) - maxy)
         return listOf(X, Y)
     }
+
+    fun findPolygon(p:ArrayList<Polygon>, id:String):Polygon{
+        for (i in p){
+            if (i.id==id) return i
+        }
+        return Polygon("1",ArrayList<Point>())
+    }
+
+    fun getExtent(polygons:ArrayList<Polygon>):Pair<Double,Double>{
+        var totalx:Double = 0.0
+        var totaly:Double = 0.0
+        var size=0
+        for (i in polygons){
+            for (p in i.pois){
+                totalx+=p.x
+                totaly+=p.y
+                size++
+            }
+
+        }
+        return Pair((totalx/(size)),(totaly/(size)))
+    }
+    fun isNumeric(input: String): Boolean =
+        try {
+            input.toDouble()
+            true
+        } catch(e: NumberFormatException) {
+            false
+        }
 }

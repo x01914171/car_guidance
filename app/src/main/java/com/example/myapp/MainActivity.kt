@@ -21,6 +21,7 @@ import android.util.Log
 //lines.txt  端点ID1，端点ID2，宽度
 //points.txt 端点ID，X,Y
 //polygon_pois.txt 点id 多边形id X,Y (道路多边形)
+//
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
     //定义控件
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity() {
     private var polygons:ArrayList<Polygon> = ArrayList();
     private var corner:ArrayList<String> = ArrayList()//转弯处
     private var corners:ArrayList<Corner> = ArrayList()
+
+
     private var carwidth =0.0f
     private var carlength =0.0f
     var graph:GraphImpl<Point,Float> = GraphImpl(false,5.0f) //图
@@ -170,6 +173,9 @@ class MainActivity : AppCompatActivity() {
         allpoint = readfile("allpoints.txt")
         corner = readfile("corner.txt")
         polygon = readfile("polygon_pois.txt")
+
+        var text = readfile("roadname.txt")
+
         for (index in 0..allpoint.size-6 step 6){
             allpoints.add(AllPoints(allpoint[index],allpoint[index+1],allpoint[index+2].toDouble(),
                 allpoint[index+3].replace("\r","").toDouble(),allpoint[index +5].toFloat()))
@@ -238,7 +244,10 @@ class MainActivity : AppCompatActivity() {
             maxx = if (x0<maxx) maxx else x0
             maxy = if (y0<maxy) maxy else y0
         }
+
+
         //传输数据
+        myView.text=text
         myView.minx = minx
         myView.maxx = maxx
         myView.miny = miny
