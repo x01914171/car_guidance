@@ -84,7 +84,7 @@ class MyView @JvmOverloads constructor(
         paint.reset()
         //绘制文本
         paint.setStyle(Paint.Style.FILL);
-        paint.setStrokeWidth(20f);
+        paint.setStrokeWidth(18f);
         paint.setTextSize(20f);
         var name = text[0]
         var poys = ArrayList<Polygon>()
@@ -99,7 +99,7 @@ class MyView @JvmOverloads constructor(
                 poys = ArrayList<Polygon>()
             }
         }
-
+        paint.reset()
         paint.strokeWidth = 3f
         paint.color = Color.BLACK
         for (index in 1..allPointsList.size - 1) {

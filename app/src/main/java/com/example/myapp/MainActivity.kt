@@ -21,7 +21,7 @@ import android.util.Log
 //lines.txt  端点ID1，端点ID2，宽度
 //points.txt 端点ID，X,Y
 //polygon_pois.txt 点id 多边形id X,Y (道路多边形)
-//
+//corner
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
     //定义控件
@@ -118,6 +118,7 @@ class MainActivity : AppCompatActivity() {
                         if (!switch.isChecked){
                             //图
                             path = shortestPath(graph,from = firstPoint,destination = lastPoint)
+                            println(path.second)
                             if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
@@ -147,6 +148,7 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                             path = shortestPath(graph2,from = firstPoint,destination = lastPoint)
+                            println(path.second)
                             if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
@@ -171,7 +173,7 @@ class MainActivity : AppCompatActivity() {
         point = readfile("points.txt")
         line =  readfile("lines.txt")
         allpoint = readfile("allpoints.txt")
-        corner = readfile("corner.txt")
+        corner = readfile("corner2.txt")
         polygon = readfile("polygon_pois.txt")
 
         var text = readfile("roadname.txt")
@@ -247,7 +249,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //传输数据
-        myView.text=text
+        myView.text = text
         myView.minx = minx
         myView.maxx = maxx
         myView.miny = miny
