@@ -7,8 +7,9 @@
 
 
 
-#### 安装教程
+#### 安装
 
-1.  链接：https://pan.baidu.com/s/1Fd-bwuM9bZIPQUUcQsi-XQ?pwd=jqxo  提取码：jqxo 
+链接：https://pan.baidu.com/s/1vjL6CcClrUv1rfCIpQNuzw?pwd=tj8a 
+提取码：tj8a 
 
 
