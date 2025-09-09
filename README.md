@@ -33,7 +33,40 @@
 
 ## 📱 应用截图
 
-[alt text](picture/image.png)[alt text](picture/image2.png)
+<div align="center">
+
+### 🎯 核心功能展示
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="picture/image.png" alt="地图主界面" width="200" />
+      <br />
+      <strong>🗺️ 地图主界面</strong>
+      <br />
+      <sub>自定义地图渲染与交互</sub>
+    </td>
+    <td align="center">
+      <img src="picture/image2.png" alt="路径规划结果" width="200" />
+      <br />
+      <strong>🛣️ 路径规划</strong>
+      <br />
+      <sub>智能路径计算与可视化</sub>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+### 🎨 界面设计特点
+
+- **🎯 Material Design 3**: 现代化设计语言
+- **🌓 主题适配**: 支持明暗主题切换  
+- **📱 响应式布局**: 适配不同屏幕尺寸
+- **✨ 流畅动画**: Lottie 动画增强体验
+- **🎨 直观图标**: 清晰的功能标识
+
+> 💡 **说明**: 截图展示了应用的主要界面，实际使用中界面可能因设备而异
 
 ## 🔧 技术栈
 
