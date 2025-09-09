@@ -33,7 +33,7 @@
 
 ## 📱 应用截图
 
-*截图将在这里添加*
+[alt text](picture/image.png)[alt text](picture/image2.png)
 
 ## 🔧 技术栈
 
