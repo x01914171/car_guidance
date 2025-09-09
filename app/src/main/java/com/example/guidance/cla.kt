@@ -1,4 +1,4 @@
-package com.example.mypro
+package com.example.guidance
 
 data class Point(val id:String, var x: Double, var y: Double)
 data class Line(val id :String, val length:Float,val p1:Point,val p2:Point,val width: Float)

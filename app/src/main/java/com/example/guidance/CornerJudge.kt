@@ -1,9 +1,7 @@
-package com.example.myapp
+package com.example.guidance
 
 import android.os.Debug
 import android.util.Log
-import com.example.mypro.Line
-import com.example.mypro.Point
 import org.jetbrains.annotations.TestOnly
 import java.math.BigDecimal
 import java.math.RoundingMode

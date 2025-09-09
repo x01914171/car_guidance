@@ -1,39 +1,36 @@
-package com.example.myapp
-
+package com.example.guidance
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.example.mypro.*
+import com.example.guidance.*
 import shortestPath
 import java.io.*
 import GraphImpl
 import android.util.Log
 
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Switch
+import android.widget.TextView
+import androidx.activity.ComponentActivity
 
-//allpoints.txt :点ID，线ID，宽度，X,Y (道路中心线)
-//lines.txt  端点ID1，端点ID2，宽度
-//points.txt 端点ID，X,Y
-//polygon_pois.txt 点id 多边形id X,Y (道路多边形)
-//corner
-@SuppressLint("UseSwitchCompatOrMaterialCode")
-class MainActivity : AppCompatActivity() {
-    //定义控件
-    lateinit var button:Button
-    lateinit var myView:MyView
-    lateinit var textView:TextView
-    lateinit var carw:TextView
-    lateinit var carl:TextView
+
+class MainActivity : ComponentActivity() {
+
+//    初始化
+//定义控件
+    lateinit var button: Button
+    lateinit var myView: MyView
+    lateinit var textView: TextView
+    lateinit var carw: TextView
+    lateinit var carl: TextView
     lateinit var switch: Switch
     //目标点id
-    var firstPoint:Point= Point("0",0.0,0.0)
-    var lastPoint: Point=Point("0",0.0,0.0)
+    var firstPoint: Point = Point("0",0.0,0.0)
+    var lastPoint: Point = Point("0",0.0,0.0)
 
     var minx = Double.MAX_VALUE
     var maxx = Double.MIN_VALUE
@@ -59,11 +56,13 @@ class MainActivity : AppCompatActivity() {
     var graph2:GraphImpl<Point,Float> = GraphImpl(false,5.0f) //图
     var path = shortestPath(graph,from = Point("0",0.0,0.0),destination = Point("0",0.0,0.0))
 
+
     //初始化
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+        Log.d("main", "加载到main")
         //绑定控件
         button = findViewById(R.id.button)
         myView = findViewById(R.id.view)
@@ -74,7 +73,8 @@ class MainActivity : AppCompatActivity() {
         switch.isChecked = true
 
     }
-    //加载数据，地图
+
+
     override fun onStart() {
         super.onStart()
         initMap()
@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         button.setOnClickListener {
+
             when(button.text){
                 "确定" -> {
                     myView.visibility = View.VISIBLE
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                             if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
-                                textView.text= "出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n"
+                                textView.text="出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n道路总长：${String.format("%.1f", path.second)} 米"
                                 Toast.makeText(this, "查询成功", Toast.LENGTH_LONG).show()
                             }else{
                                 textView.text= "不连通"
@@ -152,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                             if(path.first.size!=0 && path.second<Float.MAX_VALUE){
                                 myView.pathr = path.first as ArrayList<Point>
                                 myView.invalidate()
-                                textView.text="出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n"
+                                textView.text="出发点ID：${firstPoint.id}\n目的点ID：${lastPoint.id}\n道路总长：${String.format("%.1f", path.second)} 米"
                                 Toast.makeText(this, "查询成功", Toast.LENGTH_LONG).show()
                             }else{
                                 textView.text= "不连通"
@@ -173,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         point = readfile("points.txt")
         line =  readfile("lines.txt")
         allpoint = readfile("allpoints.txt")
-        corner = readfile("corner2.txt")
+        corner = readfile("corner.txt")
         polygon = readfile("polygon_pois.txt")
 
         var text = readfile("roadname.txt")

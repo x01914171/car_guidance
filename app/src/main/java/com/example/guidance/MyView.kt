@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.guidance
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,10 +7,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import com.example.mypro.AllPoints
-import com.example.mypro.Line
-import com.example.mypro.Point
-import com.example.mypro.Polygon
 import kotlin.math.sqrt
 
 class MyView @JvmOverloads constructor(
